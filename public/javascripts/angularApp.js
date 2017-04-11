@@ -58,6 +58,11 @@ app.controller('PollsCtrl', [
 
         $scope.data = [];
 
+        for(var i = 0; i < $scope.poll.options.length; i++){
+                    $scope.labels.push($scope.poll.options[i]["label"]);
+                    $scope.data.push($scope.poll.options[i]["upvotes"]);
+                }
+
         $scope.addOption = function () {
             if ($scope.label === '') { return; }
             polls.addOption(poll._id, {
@@ -65,7 +70,6 @@ app.controller('PollsCtrl', [
                 author: 'user',
             }).success(function (option) {
                 console.log($scope.poll.options);
-                console.log($scope.poll.options.label);
                 $scope.poll.options.push(option);
             });
             $scope.label = '';

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 require('./models/Polls');
 require('./models/Options');
+require('./models/Users');
 
 mongoose.connect('mongodb://localhost/votingstateparamtest');
 
