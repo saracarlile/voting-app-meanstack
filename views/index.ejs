@@ -1,0 +1,95 @@
+    <!doctype html>
+<html lang="en">
+
+<head>
+    <title>VoteExpress | Voting App</title>
+    <meta name="description" content="Voting App, Fullstack JavaScript App">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="https://use.fontawesome.com/bd2329c420.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="/javascripts/angular-chart.js"></script>
+    <script src="/javascripts/angularApp.js"></script>
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <!-- http://avenger.kaijuthemes.com/ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body ng-app="votingApp">
+    <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px;">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <p>VoteExpress</p>
+                </a>
+            </div>
+            <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-left:10px">Sign in</button>
+            <button type="button" class="btn btn-default navbar-btn navbar-right">Register</button>
+        </div>
+    </nav>
+    <div class="jumbotron" style="background-color: teal">
+        <h1 style="color: white" class="text-center">VoteExpress</h1>
+        <h3 style="color: white" class="text-center">Create custom polls with live results</h3>
+    </div>
+    <div class="container">
+        <ui-view></ui-view>
+    </div>
+    <script type="text/ng-template" id="/home.html">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>All Polls</h3>
+                <p>Select a poll to view results and/or vote</p>
+
+                <div ng-repeat="poll in polls">
+                    <div class="col-xs-12" style="font-size:20px; margin:10px 0px; background-color: oldlace">
+                        <h4><a href="#/polls/{{poll._id}}">{{poll.title}}</a></h4>
+                    </div>
+                </div>
+
+
+                <form ng-submit="addPoll()" style="margin-top:30px;">
+                    <h5>Add a new poll</h5>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/polls.html">
+        <div class="row">
+            <div class="col-xs-12 col-md-5">
+                <h3>{{poll.title}}</h3>
+                
+
+                <div ng-repeat="option in poll.options">
+                    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(option)"></span> {{option.upvotes}}
+                    <span style="font-size:20px; margin-left:10px;">
+                         {{option.label}}
+                 </span>
+                </div>
+                <form ng-submit="addOption()" style="margin-top:30px;">
+                    <h5>Add a new poll option</h5>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Option" ng-model="label"></input>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </form>
+            </div>
+            <div class="col-xs-12 col-md-6 col-md-offset-1">
+
+                <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-options="options" style="max-width: 400px; max-height: 400px;">
+                </canvas>
+
+            </div>
+        </div>
+
+    </script>
+</body>
+
+</html>

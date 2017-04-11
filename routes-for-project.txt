@@ -1,0 +1,15 @@
+Routes for Project
+
+- view all polls
+- add a new poll
+- view options associated with a poll
+- add an option
+- upvote/vote for an option
+
+actions map to routes:
+
+- GET /polls - return a list of polls and associated metadata
+- POST /polls - create a new poll
+- GET /polls/:id - return an individual poll with associated options
+- POST /polls/:id/options - add a new option to a poll by ID
+- PUT /polls/:id/options/:id/upvote - upvote an option
