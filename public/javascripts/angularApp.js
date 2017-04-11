@@ -58,10 +58,10 @@ app.controller('PollsCtrl', [
 
         $scope.data = [];
 
-        for(var i = 0; i < $scope.poll.options.length; i++){
-                    $scope.labels.push($scope.poll.options[i]["label"]);
-                    $scope.data.push($scope.poll.options[i]["upvotes"]);
-                }
+        for (var i = 0; i < $scope.poll.options.length; i++) {
+            $scope.labels.push($scope.poll.options[i]["label"]);
+            $scope.data.push($scope.poll.options[i]["upvotes"]);
+        }
 
         $scope.addOption = function () {
             if ($scope.label === '') { return; }
@@ -71,6 +71,12 @@ app.controller('PollsCtrl', [
             }).success(function (option) {
                 console.log($scope.poll.options);
                 $scope.poll.options.push(option);
+                $scope.labels = [];
+                $scope.data = [];
+                for (var i = 0; i < $scope.poll.options.length; i++) {
+                    $scope.labels.push($scope.poll.options[i]["label"]);
+                    $scope.data.push($scope.poll.options[i]["upvotes"]);
+                }
             });
             $scope.label = '';
 
@@ -78,6 +84,12 @@ app.controller('PollsCtrl', [
 
         $scope.incrementUpvotes = function (option) {
             polls.upvoteOption(poll, option);
+            $scope.labels = [];
+            $scope.data = [];
+            for (var i = 0; i < $scope.poll.options.length; i++) {
+                $scope.labels.push($scope.poll.options[i]["label"]);
+                $scope.data.push($scope.poll.options[i]["upvotes"]);
+            }
         };
 
 
