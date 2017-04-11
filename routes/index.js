@@ -1,15 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-function getOptionByID(req, res){
-    var query  = Option.where({ _id: req.params.option_id }); // <-- Use the correct param name
-    query.findOne(function (err, option) {
-        if (err)
-            return res.send(err)
-        res.json(option);
-        });
-    };
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -50,6 +41,18 @@ router.param('poll', function(req, res, next, id) {  //Express's param() functio
   });
 }); 
 
+router.param('option', function(req, res, next, id) {
+  var query = Option.findById(id);
+
+  query.exec(function (err, option){
+    if (err) { return next(err); }
+    if (!option) { return next(new Error('can\'t find option')); }
+
+    req.option = option;
+    return next();
+  });
+});
+
 
 
 router.get('/polls/:poll', function(req, res) { //get poll by ID
@@ -77,8 +80,15 @@ router.post('/polls/:poll/options', function(req, res, next) {  //add poll optio
 });
 
 
-router.put('/polls/:poll/options/:option_id/upvote', function(req, res) {  //upvote/vote for an option
-  getOptionByID(req, res); // <-- sending both req and res to the function
+router.put('/polls/:poll/options/:option/upvote', function(req, res, next) {
+  req.option.upvote(function(err,option){
+    if (err) { return next(err); }
+
+    res.json(option);
+  });
+
+
+  
 });
 
 

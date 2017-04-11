@@ -7,4 +7,9 @@ var OptionSchema = new mongoose.Schema({
   poll: { type: mongoose.Schema.Types.ObjectId, ref: 'Poll' }
 });
 
+OptionSchema.methods.upvote = function(cb) {
+  this.upvotes += 1;
+  this.save(cb);
+};
+
 mongoose.model('Option', OptionSchema);
