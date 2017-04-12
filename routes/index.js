@@ -1,5 +1,9 @@
 var express = require('express');
+var jwt = require('express-jwt');
 var router = express.Router();
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -7,8 +11,10 @@ router.get('/', function(req, res, next) {
 });
 
 var mongoose = require('mongoose');
+var passport = require('passport');
 var Poll = mongoose.model('Poll');
 var Option = mongoose.model('Option');
+var User = mongoose.model('User');
 
 router.get('/polls', function(req, res, next) {  // load all polls
 
@@ -19,7 +25,7 @@ router.get('/polls', function(req, res, next) {  // load all polls
   });
 });
 
-router.post('/polls', function(req, res, next) {  //add new polls
+router.post('/polls', auth, function(req, res, next) {  //add new polls
   var poll = new Poll(req.body);
 
   poll.save(function(err, poll){
@@ -63,7 +69,7 @@ router.get('/polls/:poll', function(req, res) { //get poll by ID
   });
 });
 
-router.post('/polls/:poll/options', function(req, res, next) {  //add poll option
+router.post('/polls/:poll/options', auth, function(req, res, next) {  //add poll option
   var option = new Option(req.body);
   option.poll = req.poll;
 
@@ -80,17 +86,47 @@ router.post('/polls/:poll/options', function(req, res, next) {  //add poll optio
 });
 
 
-router.put('/polls/:poll/options/:option/upvote', function(req, res, next) {
+router.put('/polls/:poll/options/:option/upvote', auth, function(req, res, next) {
   req.option.upvote(function(err,option){
     if (err) { return next(err); }
 
     res.json(option);
   });
-
-
-  
 });
 
+router.post('/register', function(req, res, next){
+  if(!req.body.username || !req.body.password){
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+
+  var user = new User();
+
+  user.username = req.body.username;
+
+  user.setPassword(req.body.password)
+
+  user.save(function (err){
+    if(err){ return next(err); }
+
+    return res.json({token: user.generateJWT()})
+  });
+});
+
+router.post('/login', function(req, res, next){
+  if(!req.body.username || !req.body.password){
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+
+  passport.authenticate('local', function(err, user, info){
+    if(err){ return next(err); }
+
+    if(user){
+      return res.json({token: user.generateJWT()});
+    } else {
+      return res.status(401).json(info);
+    }
+  })(req, res, next);
+});
 
 
 

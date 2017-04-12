@@ -66,6 +66,11 @@ app.controller('PollsCtrl', [
 
         $scope.addOption = function () {
             if ($scope.label === '') { return; }
+          /*  for (var i = 0; i < $scope.labels.length; i++) {
+                if ($scope.labels[i] === $scope.label) {
+                    return;
+                }
+            }*/
             polls.addOption(poll._id, {
                 label: $scope.label,
                 author: 'user',

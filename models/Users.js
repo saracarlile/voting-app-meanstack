@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var crypto = require('crypto');
+var crypto = require('crypto');  //node crypto module
 var jwt = require('jsonwebtoken');
 
 var UserSchema = new mongoose.Schema({
@@ -9,15 +9,15 @@ var UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.setPassword = function(password){
-  this.salt = crypto.randomBytes(16).toString('hex');
+  this.salt = crypto.randomBytes(16).toString('hex'); //salt password (add extra characters) -- each user gets their own salt
 
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+  this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');  // hash password 1000 times (iterate)
 };
 
 UserSchema.methods.validPassword = function(password) {
   var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 
-  return this.hash === hash;
+  return this.hash === hash;  //check if entered PW matches
 };
 
 UserSchema.methods.generateJWT = function() {
