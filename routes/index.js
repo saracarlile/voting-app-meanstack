@@ -1,7 +1,7 @@
 var express = require('express');
-var jwt = require('express-jwt');
+var jwt = require('express-jwt'); //node moduel that interacts with jwt tokens and Express framework
 var router = express.Router();
-var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'}); //change SECRET to ENV Variable at production
 
 
 
@@ -27,6 +27,7 @@ router.get('/polls', function(req, res, next) {  // load all polls
 
 router.post('/polls', auth, function(req, res, next) {  //add new polls
   var poll = new Poll(req.body);
+   poll.author = req.payload.username;
 
   poll.save(function(err, poll){
     if(err){ return next(err); }
@@ -72,6 +73,7 @@ router.get('/polls/:poll', function(req, res) { //get poll by ID
 router.post('/polls/:poll/options', auth, function(req, res, next) {  //add poll option
   var option = new Option(req.body);
   option.poll = req.poll;
+  option.author = req.payload.username;
 
   option.save(function(err, option){
     if(err){ return next(err); }
