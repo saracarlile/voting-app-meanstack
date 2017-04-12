@@ -58,6 +58,7 @@ app.controller('PollsCtrl', [
 
         $scope.data = [];
 
+
         for (var i = 0; i < $scope.poll.options.length; i++) {
             $scope.labels.push($scope.poll.options[i]["label"]);
             $scope.data.push($scope.poll.options[i]["upvotes"]);
@@ -69,7 +70,6 @@ app.controller('PollsCtrl', [
                 label: $scope.label,
                 author: 'user',
             }).success(function (option) {
-                console.log($scope.poll.options);
                 $scope.poll.options.push(option);
                 $scope.labels = [];
                 $scope.data = [];
@@ -84,35 +84,12 @@ app.controller('PollsCtrl', [
 
         $scope.incrementUpvotes = function (option) {
             polls.upvoteOption(poll, option);
-            $scope.labels = [];
-            $scope.data = [];
             for (var i = 0; i < $scope.poll.options.length; i++) {
-                $scope.labels.push($scope.poll.options[i]["label"]);
-                $scope.data.push($scope.poll.options[i]["upvotes"]);
+                if ($scope.poll.options[i]["label"] === option["label"]) {
+                    $scope.data[i] += 1;
+                }
             }
         };
-
-
-        /*    $scope.addOption = function () {
-               if ($scope.body === '') { return; }
-               $scope.poll.options.push({
-                   body: $scope.body,
-                   upvotes: 1,
-                   labels: $scope.labels.push($scope.body),
-                   data: $scope.data.push(1)
-               });
-               $scope.body = '';
-           };
-   
-           $scope.incrementUpvotes = function (option) {
-               option.upvotes += 1;
-                console.log(option.body);
-               console.log($scope.labels);
-               var ind = $scope.labels.indexOf(option.body);
-               $scope.data[ind] += 1
-   
-           };*/
-
 
 
     }]);
