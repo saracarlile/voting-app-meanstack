@@ -19,15 +19,19 @@
 </head>
 
 <body ng-app="votingApp">
-    <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px;">
+    <nav class="navbar navbar-default" style="margin-bottom: 0px;" ng-controller="NavCtrl">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">
                     <p>VoteExpress</p>
                 </a>
             </div>
-            <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-left:10px">Sign in</button>
-            <button type="button" class="btn btn-default navbar-btn navbar-right">Register</button>
+            <ul class="nav navbar-nav  pull-right">
+                <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+                <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+                <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+                <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+            </ul>
         </div>
     </nav>
     <div class="jumbotron" style="background-color: teal">
@@ -46,11 +50,17 @@
                 <div ng-repeat="poll in polls">
                     <div class="col-xs-12" style="font-size:20px; margin:10px 0px; background-color: oldlace">
                         <h4><a href="#/polls/{{poll._id}}">{{poll.title}}</a></h4>
+                        <span ng-show="poll.author">
+                            <p  style="font-size:12px;">posted by <a>{{poll.author}}</a></p>
+                        </span>
                     </div>
                 </div>
             </div>
             <div class="col-xs-12">
-                <form ng-submit="addPoll()">
+            <div ng-hide="isLoggedIn()">
+               <p>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a poll.</p>
+            </div>
+                <form ng-submit="addPoll()" ng-show="isLoggedIn()">
                     <h5>Add a new poll</h5>
 
                     <div class="form-group">
@@ -58,6 +68,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
+                
             </div>
         </div>
     </script>
@@ -73,7 +84,10 @@
                          {{option.label}}
                  </span>
                 </div>
-                <form ng-submit="addOption()" style="margin-top:30px;">
+                <div ng-hide="isLoggedIn()" >
+                     <p>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add an option.</p>
+                </div>
+                <form ng-submit="addOption()"  ng-show="isLoggedIn()" style="margin-top:30px;">
                     <h5>Add a new poll option</h5>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Option" ng-model="label"></input>
@@ -90,6 +104,62 @@
         </div>
 
     </script>
+    <script type="text/ng-template" id="/register.html">
+         <div class="row">
+            <div class="col-xs-12">
+                <div ng-show="error" class="alert alert-danger row">
+                    <span>{{ error.message }}</span>
+                </div>
+
+                <form ng-submit="register()" style="margin-top:30px;">
+                    <h3>Register</h3>
+
+                    <div class="form-group">
+                        <input type="text"
+                            class="form-control"
+                            placeholder="Username"
+                            ng-model="user.username"></input>
+                        </div>
+                    <div class="form-group">
+                    <input type="password"
+                        class="form-control"
+                        placeholder="Password"
+                        ng-model="user.password"></input>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/login.html">
+        <div class="row">
+            <div class="col-xs-12">
+
+        <div ng-show="error" class="alert alert-danger row">
+            <span>{{ error.message }}</span>
+        </div>
+
+            <form ng-submit="logIn()"style="margin-top:30px;">
+                
+            <h3>Log In</h3>
+
+            <div class="form-group">
+                <input type="text"
+                class="form-control"
+                placeholder="Username"
+                ng-model="user.username"></input>
+            </div>
+            <div class="form-group">
+                <input type="password"
+                class="form-control"
+                placeholder="Password"
+                ng-model="user.password"></input>
+            </div>
+            <button type="submit" class="btn btn-primary">Log In</button>
+            </form>
+        </div>
+    </div>
+</script>
 </body>
 
 </html>
