@@ -175,7 +175,7 @@ app.factory('auth', ['$http', '$window', function ($http, $window) {  //$window 
     };
 
     auth.logOut = function () {
-        $window.localStorage.removeItem('flapper-news-token');
+        $window.localStorage.removeItem('vote-express');
     };
 
 
