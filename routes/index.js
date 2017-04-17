@@ -25,12 +25,13 @@ router.get('/polls', function (req, res, next) {  // load all polls
   });
 });
 
-router.get('/viewmypolls/', function (req, res, next) {  // load all polls for user
-
-  Poll.find({ 'author' : 's_coder' }, function (err, polls) {
+router.get('/viewmypolls/:author', function (req, res, next) {  // load all polls for user
+ var pollAuthor = req.params.author;
+  console.log(req.params.author);
+  Poll.find({ 'author': 's_coder'}, function (err, mypolls) {
     if (err) { return next(err); }
 
-    res.json(polls);
+    res.json(mypolls);
   });
 });
 
@@ -80,13 +81,7 @@ router.get('/polls/:poll', function (req, res) { //get poll by ID
   });
 });
 
-router.get('/viewmypolls/:poll', function (req, res) { //get poll by ID
-  req.poll.populate('options', function (err, poll) {
-    if (err) { return next(err); }
 
-    res.json(poll);
-  });
-});
 
 
 

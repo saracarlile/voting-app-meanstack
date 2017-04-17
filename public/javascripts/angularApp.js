@@ -47,9 +47,11 @@ app.config([
                 }]
             })
             .state('viewmypolls', {
-                url: '/viewmypolls/{author}',
+                url: '/viewmypolls/:author',
                 templateUrl: '/viewmypolls.html',
-                controller: 'PollsCtrl'
+                controller: function ($scope, $stateParams) {
+                    $scope.author = $stateParams.author;
+                },
             });
 
         $urlRouterProvider.otherwise('home');
@@ -79,8 +81,10 @@ app.controller('PollsCtrl', [
     'polls',
     'poll',
     'auth',
-    function ($scope, polls, poll, auth) {
+    'mypolls',
+    function ($scope, polls, poll, auth, mypolls) {
         $scope.isLoggedIn = auth.isLoggedIn;
+        $scope.author = auth.currentUser();
 
         $scope.poll = poll;
 
@@ -88,6 +92,11 @@ app.controller('PollsCtrl', [
         $scope.labels = [];
 
         $scope.data = [];
+
+
+        $scope.myPolls = mypolls.getMyPolls();
+        console.log($scope.myPolls);
+
 
 
         for (var i = 0; i < $scope.poll.options.length; i++) {
@@ -125,11 +134,6 @@ app.controller('PollsCtrl', [
                     $scope.data[i] += 1;
                 }
             }
-        };
-
-        $scope.getAllMy = function(){
-            poll.getMyPolls();
-
         };
 
 
@@ -244,16 +248,6 @@ app.factory('polls', ['$http', 'auth', function ($http, auth) {
         });
     };
 
-    o.getMyPolls = function () {
-       // var author =  auth.currentUser;  //get all polls for author/user that's signed in
-            return $http.get('/viewmypolls/', {
-            headers: { Authorization: 'Bearer ' + auth.getToken() }
-        }).success(function (data) {
-                return res.data;
-            });
-        };
-
-
     o.create = function (poll) {
         return $http.post('/polls', poll, {
             headers: { Authorization: 'Bearer ' + auth.getToken() }
@@ -283,4 +277,24 @@ app.factory('polls', ['$http', 'auth', function ($http, auth) {
 
 
     return o;
+}]);
+
+
+app.factory('mypolls', ['$http', 'auth', function ($http, auth) {
+    var m = {
+        mypolls: []
+    };
+
+    m.getMyPolls = function () {
+        // var author =  auth.currentUser;  //get all polls for author/user that's signed in
+        var author = auth.currentUser;
+        return $http.get('/viewmypolls/' + author, {
+            headers: { Authorization: 'Bearer ' + auth.getToken() }
+        }).success(function (res, data) {
+              angular.copy(data, m.mypolls);
+        });
+    };
+
+
+    return m;
 }]);
