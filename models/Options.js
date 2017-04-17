@@ -3,8 +3,7 @@ var mongoose = require('mongoose');
 var OptionSchema = new mongoose.Schema({
   upvotes: {type: Number, default: 0},
   label:  String,
-  author: String,
-  poll: { type: mongoose.Schema.Types.ObjectId, ref: 'Poll' }
+  poll: { type: mongoose.Schema.Types.ObjectId, ref: 'Poll' },
 });
 
 OptionSchema.methods.upvote = function(cb) {

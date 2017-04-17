@@ -68,7 +68,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
-                
+                 <h4><a href="#/viewmypolls/ {{ currentUser() }}">View my polls {{ currentUser() }}</a></h4> 
             </div>
         </div>
     </script>
@@ -85,7 +85,7 @@
                  </span>
                 </div>
                 <div ng-hide="isLoggedIn()" >
-                     <p>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add an option.</p>
+                     <p>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add an option to the poll.</p>
                 </div>
                 <form ng-submit="addOption()"  ng-show="isLoggedIn()" style="margin-top:30px;">
                     <h5>Add a new poll option</h5>
@@ -157,6 +157,17 @@
             </div>
             <button type="submit" class="btn btn-primary">Log In</button>
             </form>
+        </div>
+    </div>
+</script>
+
+
+    <script type="text/ng-template" id="/viewmypolls.html">
+        <div class="row">
+            <div class="col-xs-12">
+                
+            <h3>View All My Polls</h3>
+
         </div>
     </div>
 </script>

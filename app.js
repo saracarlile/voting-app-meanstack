@@ -12,7 +12,7 @@ require('./models/Users');
 
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/votingstateparamtest');
+mongoose.connect('mongodb://localhost/votings');
 
 var index = require('./routes/index');
 var users = require('./routes/users');

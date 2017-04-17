@@ -45,6 +45,11 @@ app.config([
                         $state.go('home');
                     }
                 }]
+            })
+            .state('viewmypolls', {
+                url: '/viewmypolls/{author}',
+                templateUrl: '/viewmypolls.html',
+                controller: 'PollsCtrl'
             });
 
         $urlRouterProvider.otherwise('home');
@@ -122,6 +127,10 @@ app.controller('PollsCtrl', [
             }
         };
 
+        $scope.getAllMy = function(){
+            poll.getMyPolls();
+
+        };
 
 
     }]);
@@ -218,6 +227,7 @@ app.controller('NavCtrl', [
 
 
 app.factory('polls', ['$http', 'auth', function ($http, auth) {
+
     var o = {
         polls: []
     };
@@ -233,6 +243,16 @@ app.factory('polls', ['$http', 'auth', function ($http, auth) {
             angular.copy(data, o.polls);
         });
     };
+
+    o.getMyPolls = function () {
+       // var author =  auth.currentUser;  //get all polls for author/user that's signed in
+            return $http.get('/viewmypolls/', {
+            headers: { Authorization: 'Bearer ' + auth.getToken() }
+        }).success(function (data) {
+                return res.data;
+            });
+        };
+
 
     o.create = function (poll) {
         return $http.post('/polls', poll, {
@@ -250,9 +270,9 @@ app.factory('polls', ['$http', 'auth', function ($http, auth) {
 
     o.upvoteOption = function (poll, option) {
         return $http.put('/polls/' + poll._id + '/options/' + option._id + '/upvote', null,
-         {
-            headers: { Authorization: 'Bearer ' + auth.getToken() }
-        }
+            {
+                headers: { Authorization: 'Bearer ' + auth.getToken() }
+            }
         ).success(function (data) {
             option.upvotes += 1;
         })
