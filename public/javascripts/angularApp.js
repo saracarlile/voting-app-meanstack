@@ -279,9 +279,7 @@ app.factory('polls', ['$http', 'auth', function ($http, auth) {
     };
 
     o.delete = function(id){
-        return $http.delete('/polls/' + id).then(function (res) {
-            return res.data;
-        }).success(function (data) {
+        return $http.delete('/polls/' + id).success(function (data) {
             console.log('success');
         });
     };

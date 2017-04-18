@@ -148,14 +148,29 @@ router.post('/login', function (req, res, next) {
 
 
 router.delete('/polls/:id/', function(req, res, next) {
+
+  Poll.findByIdAndRemove(req.params.id, function (err, poll) {  
+    // We'll create a simple object to send back with a message and the id of the document that was removed
+    // You can really do this however you want, though.
+    var response = {
+        message: "Poll successfully deleted",
+        id: poll._id
+    };
+    res.send(response);
+});
+
+
+/*
   Polls.findById(req.params.id, function (err, poll) {
-    if(err) { return next(err); }
+    if(err) { 
+      return next(err); }
     if(!poll) { return res.send(404); }
     poll.remove(function(err) {
-      if(err) { return handleError(res, err); }
+      if(err) { 
+        return handleError(res, err); }
       return res.send(204);
     });
-  });
+  });*/
 });
 
 
