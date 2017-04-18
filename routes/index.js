@@ -25,15 +25,16 @@ router.get('/polls', function (req, res, next) {  // load all polls
   });
 });
 
+
 router.get('/viewmypolls/:author', function (req, res, next) {  // load all polls for user
  var pollAuthor = req.params.author;
-  console.log(req.params.author);
-  Poll.find({ 'author': 's_coder'}, function (err, mypolls) {
+  console.log(pollAuthor);
+  Poll.find({ 'author': pollAuthor}, function (err, mypolls) {
     if (err) { return next(err); }
 
     res.json(mypolls);
   });
-});
+}); 
 
 
 router.post('/polls', auth, function (req, res, next) {  //add new polls
@@ -70,7 +71,6 @@ router.param('option', function (req, res, next, id) {
     return next();
   });
 });
-
 
 
 router.get('/polls/:poll', function (req, res) { //get poll by ID

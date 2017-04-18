@@ -81,28 +81,36 @@ app.controller('PollsCtrl', [
     'polls',
     'poll',
     'auth',
-    'mypolls',
-    function ($scope, polls, poll, auth, mypolls) {
+    '$http',
+    function ($scope, polls, poll, auth, $http) {
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.author = auth.currentUser();
-
         $scope.poll = poll;
 
         //angular-chart.js implementation
         $scope.labels = [];
-
         $scope.data = [];
-
-
-        $scope.myPolls = mypolls.getMyPolls();
-        console.log($scope.myPolls);
-
-
 
         for (var i = 0; i < $scope.poll.options.length; i++) {
             $scope.labels.push($scope.poll.options[i]["label"]);
             $scope.data.push($scope.poll.options[i]["upvotes"]);
         }
+
+        getmypolls = function () {
+            return $http.get('/viewmypolls/' + $scope.author).success(function (data) {
+                $scope.mypolls = data;
+            });
+        }
+
+        // do the ajax call
+        getmypolls().then(function (data) {
+            // stuff is now in our scope, I can alert it
+            console.log($scope.mypolls);
+
+        });
+
+
+
 
         $scope.addOption = function () {
             if ($scope.label === '') { return; }
@@ -278,23 +286,4 @@ app.factory('polls', ['$http', 'auth', function ($http, auth) {
 
     return o;
 }]);
-
-
-app.factory('mypolls', ['$http', 'auth', function ($http, auth) {
-    var m = {
-        mypolls: []
-    };
-
-    m.getMyPolls = function () {
-        // var author =  auth.currentUser;  //get all polls for author/user that's signed in
-        var author = auth.currentUser;
-        return $http.get('/viewmypolls/' + author, {
-            headers: { Authorization: 'Bearer ' + auth.getToken() }
-        }).success(function (res, data) {
-              angular.copy(data, m.mypolls);
-        });
-    };
-
-
-    return m;
-}]);
+//http://stackoverflow.com/questions/28217194/how-to-access-the-result-outside-the-http-get-in-angularjs

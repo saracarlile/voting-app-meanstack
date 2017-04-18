@@ -95,6 +95,12 @@
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
                 <h4><a href="#/viewmypolls/{{author}}">View my polls {{author}}</a></h4> 
+                <div ng-repeat="poll in mypolls">
+                 {{poll.title}}
+                 </div>
+
+                
+
                 </div>
             </div>
             <div class="col-xs-12 col-md-6 col-md-offset-1">
@@ -170,15 +176,10 @@
                 
             <h3>View All My Polls</h3>
 
-             <div>
-                {{author}}
-            </div>
-           <div ng-repeat="mypoll in mypolls">
-                    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(option)"></span> {{mypoll.title}}
-                    <span style="font-size:20px; margin-left:10px;">
-                         {{mypoll.author}}
-                 </span>
+            
+            
 
+             
 
 
 
