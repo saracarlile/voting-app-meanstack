@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-xs-6">
+        <h3>{{poll.title}}</h3>
+
+
+        <div ng-repeat="option in poll.options">
+            <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(option)"></span> {{option.upvotes}}
+            <span style="font-size:20px; margin-left:10px;">
+                         {{option.label}}
+                 </span>
+        </div>
+        <div ng-hide="isLoggedIn()">
+            <p>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add an option
+                to the poll.</p>
+        </div>
+        <form ng-submit="addOption()" ng-show="isLoggedIn()" style="margin-top:30px;">
+            <h5>Add a new poll option</h5>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Option" ng-model="label"></input>
+            </div>
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+    </div>
+    <div class="col-xs-6">
+        <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-options="options" style="max-width: 400px; max-height: 400px;">
+        </canvas>
+
+    </div>
+</div>
+<div class='row'>
+    <div class="col-xs-6">
+        <h4>{author}}'s Polls</h4>
+        <div ng-repeat="poll in mypolls">
+            {{poll.title}}
+        </div>
+    </div>
+</div>

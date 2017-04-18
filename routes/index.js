@@ -147,5 +147,17 @@ router.post('/login', function (req, res, next) {
 });
 
 
+router.delete('/polls/:id/', function(req, res, next) {
+  Polls.findById(req.params.id, function (err, poll) {
+    if(err) { return next(err); }
+    if(!poll) { return res.send(404); }
+    poll.remove(function(err) {
+      if(err) { return handleError(res, err); }
+      return res.send(204);
+    });
+  });
+});
+
+
 
 module.exports = router;

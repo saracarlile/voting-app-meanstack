@@ -45,13 +45,6 @@ app.config([
                         $state.go('home');
                     }
                 }]
-            })
-            .state('viewmypolls', {
-                url: '/viewmypolls/:author',
-                templateUrl: '/viewmypolls.html',
-                controller: function ($scope, $stateParams) {
-                    $scope.author = $stateParams.author;
-                },
             });
 
         $urlRouterProvider.otherwise('home');
@@ -109,7 +102,9 @@ app.controller('PollsCtrl', [
 
         });
 
-
+        $scope.delete = function(){
+            polls.delete(poll._id);      
+        };
 
 
         $scope.addOption = function () {
@@ -283,7 +278,13 @@ app.factory('polls', ['$http', 'auth', function ($http, auth) {
             });
     };
 
+    o.delete = function(id){
+        return $http.delete('/polls/' + id).then(function (res) {
+            return res.data;
+        }).success(function (data) {
+            console.log('success');
+        });
+    };
 
     return o;
 }]);
-//http://stackoverflow.com/questions/28217194/how-to-access-the-result-outside-the-http-get-in-angularjs
