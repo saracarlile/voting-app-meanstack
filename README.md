@@ -21,7 +21,7 @@ User Story: As an unauthenticated or authenticated user, I can see the results o
 User Story: As an authenticated user, if I don't like the options on a poll, I can create a new option.
 
 ## View Project
-[View live demo of URL Shortener Microservice](https://infinite-fjord-75920.herokuapp.com/)
+[View live demo of Voting App](https://arcane-woodland-98805.herokuapp.com/)
 
 ## Technologies
 MEAN Stack - MongoDB, Express, Angular (1.5), Node.JS
