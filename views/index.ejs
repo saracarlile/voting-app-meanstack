@@ -76,8 +76,7 @@
         <div class="row">
     <div class="col-xs-6">
         <h3>{{poll.title}}</h3>
-
-
+        
         <div ng-repeat="option in poll.options">
             <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(option)"></span> {{option.upvotes}}
             <span style="font-size:20px; margin-left:10px;">
@@ -99,14 +98,13 @@
     <div class="col-xs-6">
         <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-options="options" style="max-width: 400px; max-height: 400px;">
         </canvas>
-
     </div>
 </div>
-<div class='row' style="margin:200px 10px; background-color: oldlace">
+<div class='row'  ng-show="isLoggedIn()" style="margin:75px 10px 200px; background-color: oldlace">
     <div class="col-xs-12">
         <h3>{{author}}'s Polls</h3>
         <ul ng-repeat="poll in mypolls">
-            <li>{{poll.title}}</li><button ng-click="delete()">Delete Poll</button>
+            <li>{{poll.title}}</li><button ng-click="delete($index)">Delete Poll</button>
         </ul>
     </div>
 </div>

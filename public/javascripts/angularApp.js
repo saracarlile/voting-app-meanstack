@@ -75,7 +75,8 @@ app.controller('PollsCtrl', [
     'poll',
     'auth',
     '$http',
-    function ($scope, polls, poll, auth, $http) {
+    '$state',
+    function ($scope, polls, poll, auth, $http, $state) {
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.author = auth.currentUser();
         $scope.poll = poll;
@@ -102,8 +103,15 @@ app.controller('PollsCtrl', [
 
         });
 
-        $scope.delete = function(){
-            polls.delete(poll._id);      
+        $scope.delete = function (index) {      
+            var result = confirm("Do you want to delete this poll?");
+            if (result) {
+                //Logic to delete the item
+                polls.delete($scope.mypolls[index]["_id"]);
+                $scope.mypolls.splice(index, 1);
+                $state.go("home");
+            }
+
         };
 
 
@@ -278,7 +286,7 @@ app.factory('polls', ['$http', 'auth', function ($http, auth) {
             });
     };
 
-    o.delete = function(id){
+    o.delete = function (id) {
         return $http.delete('/polls/' + id).success(function (data) {
             console.log('success');
         });
