@@ -147,7 +147,7 @@ app.controller('PollsCtrl', [
             }
         };
 
-        $scope.share = function (poll) {
+        $scope.share = function () {
             FB.ui(
                 {
                     method: 'feed',
