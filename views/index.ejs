@@ -19,11 +19,30 @@
     <meta property="og:url" content="https://arcane-woodland-98805.herokuapp.com/#/home/"/>
     <meta property="og:site_name" content="VoteExpress"/>
     <meta property="og:title" content="VoteExpress Voting App"/>
-    <meta property="og:image" content="https://avatars2.githubusercontent.com/u/9892522?v=3&s=400"/>
-    <meta property="og:image" content="https://github.com/saracarlile/voting-app-meanstack/blob/master/public/images/VoteExpress.png"/>
+    <meta property="og:image" content="https://i.ytimg.com/vi/aafEiEotMl0/maxresdefault.jpg"/>
+
 </head>
 
 <body ng-app="votingApp">
+    <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                appId      : '456489188029395',
+                xfbml      : true,
+                version    : 'v2.9'
+                });
+                FB.AppEvents.logPageView();
+            };
+
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+    </script>
     <nav class="navbar navbar-default" style="margin-bottom: 0px;" ng-controller="NavCtrl">
         <div class="container">
             <div class="navbar-header">
@@ -98,6 +117,7 @@
                 <input type="text" class="form-control" placeholder="Option" ng-model="label"></input>
             </div>
             <button type="submit" class="btn btn-primary">Post</button>
+            <!--http://stackoverflow.com/questions/20533846/single-page-application-with-angularjs-and-facebook-share-button-->
             <a href="https://www.facebook.com/sharer/sharer.php?u={{ base_path }}{{ page.url }}" class="btn btn--facebook" title="{{ site.data.ui-text[site.locale].share_on_label }} Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Share on Facebook</span></a>
         </form>
     </div>

@@ -103,7 +103,7 @@ app.controller('PollsCtrl', [
 
         });
 
-        $scope.delete = function (index) {      
+        $scope.delete = function (index) {
             var result = confirm("Do you want to delete this poll?");
             if (result) {
                 //Logic to delete the item
@@ -146,6 +146,19 @@ app.controller('PollsCtrl', [
                 }
             }
         };
+
+        $scope.share = function (poll) {
+            FB.ui(
+                {
+                    method: 'feed',
+                    name: 'This is the content of the "name" field.',
+                    link: 'https://arcane-woodland-98805.herokuapp.com/#/polls/' + poll.id,
+                    picture: 'http://www.hyperarts.com/external-xfbml/share-image.gif',
+                    caption: post.title,
+                    description: 'This is the content of the "description" field, below the caption.',
+                    message: ''
+                });
+        }
 
 
     }]);
