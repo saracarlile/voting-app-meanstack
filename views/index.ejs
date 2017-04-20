@@ -103,14 +103,8 @@
 </div>
 <div class='row'  ng-show="isLoggedIn()">
     <div class="col-xs-12">
-        <a href="#"
-            socialshare
-            socialshare-provider="twitter"
-            socialshare-text="720kb AngularJS Socialshare"
-            socialshare-hashtags="angularjs, angular-socialshare"
-            socialshare-url="http://720kb.net">
-            Share me
-            </a>
+        //social share angular
+         <a href="https://www.facebook.com/sharer/sharer.php?u={{ base_path }}{{ page.url }}" class="btn btn--facebook" title="{{ site.data.ui-text[site.locale].share_on_label }} Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
     </div>
 </div>
 <div class='row'  ng-show="isLoggedIn()" style="margin:75px 10px 200px; background-color: oldlace">

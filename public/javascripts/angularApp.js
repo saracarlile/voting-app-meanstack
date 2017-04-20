@@ -1,4 +1,4 @@
-var app = angular.module('votingApp', ['ui.router', 'chart.js', '720kb.socialshare']);
+var app = angular.module('votingApp', ['ui.router', 'chart.js']);
 
 app.config([
     '$stateProvider',
@@ -76,8 +76,7 @@ app.controller('PollsCtrl', [
     'auth',
     '$http',
     '$state',
-    'Socialshare',
-    function ($scope, polls, poll, auth, $http, $state, Socialshare) {
+    function ($scope, polls, poll, auth, $http, $state) {
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.author = auth.currentUser();
         $scope.poll = poll;
@@ -147,13 +146,6 @@ app.controller('PollsCtrl', [
                 }
             }
         };
-
-        Socialshare.share({
-            'provider': 'facebook',
-            'attrs': {
-                'socialshareUrl': 'http://720kb.net'
-            }
-         });
 
 
     }]);
