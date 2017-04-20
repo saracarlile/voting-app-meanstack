@@ -100,6 +100,19 @@
         </canvas>
     </div>
 </div>
+<div clas="row" ng-show="isLoggedIn()" >
+    <div class="col-xs-12">
+        <a href="#"
+            socialshare
+            socialshare-provider="facebook"
+            socialshare-text="Voting App - {{poll.title}}"
+            socialshare-hashtags="angularjs, angular-socialshare, voting-app"
+            socialshare-url="https://arcane-woodland-98805.herokuapp.com/polls/{poll._id}}">
+            Share to Facebook!
+            </a>
+
+    </div>
+</div>
 <div class='row'  ng-show="isLoggedIn()" style="margin:75px 10px 200px; background-color: oldlace">
     <div class="col-xs-12">
         <h3>{{author}}'s Polls</h3>
