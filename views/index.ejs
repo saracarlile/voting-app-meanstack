@@ -10,13 +10,16 @@
     <script src="https://use.fontawesome.com/bd2329c420.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="/javascripts/angular-chart.js"></script>
-    <script src="/javascripts/angular-socialshare.js"></script>
     <script src="/javascripts/angularApp.js"></script>  
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]-->
     <!-- http://avenger.kaijuthemes.com/ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:url" content="https://arcane-woodland-98805.herokuapp.com/#/home/"/>
+    <meta property="og:site_name" content="VoteExpress"/>
+    <meta property="og:title" content="VoteExpress Voting App"/>
+    <meta property="og:image" content="https://avatars2.githubusercontent.com/u/9892522?v=3&s=400"/>
 </head>
 
 <body ng-app="votingApp">
@@ -94,17 +97,12 @@
                 <input type="text" class="form-control" placeholder="Option" ng-model="label"></input>
             </div>
             <button type="submit" class="btn btn-primary">Post</button>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ base_path }}{{ page.url }}" class="btn btn--facebook" title="{{ site.data.ui-text[site.locale].share_on_label }} Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Share on Facebook</span></a>
         </form>
     </div>
     <div class="col-xs-6">
         <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-options="options" style="max-width: 400px; max-height: 400px;">
         </canvas>
-    </div>
-</div>
-<div class='row'  ng-show="isLoggedIn()">
-    <div class="col-xs-12">
-        //social share angular
-         <a href="https://www.facebook.com/sharer/sharer.php?u={{ base_path }}{{ page.url }}" class="btn btn--facebook" title="{{ site.data.ui-text[site.locale].share_on_label }} Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
     </div>
 </div>
 <div class='row'  ng-show="isLoggedIn()" style="margin:75px 10px 200px; background-color: oldlace">
