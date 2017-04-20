@@ -154,7 +154,7 @@ app.controller('PollsCtrl', [
                     name: 'This is the content of the "name" field.',
                     link: 'https://arcane-woodland-98805.herokuapp.com/#/polls/' + poll._id,
                     picture: 'http://www.hyperarts.com/external-xfbml/share-image.gif',
-                    caption: post.title,
+                    caption: poll.title,
                     description: 'This is the content of the "description" field, below the caption.',
                     message: ''
                 });
