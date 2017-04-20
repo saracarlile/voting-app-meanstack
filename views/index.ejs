@@ -118,6 +118,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Post</button>
             <!--http://stackoverflow.com/questions/20533846/single-page-application-with-angularjs-and-facebook-share-button-->
+             <button ng-click="share(post)">SHARE</button>
             <a href="https://www.facebook.com/sharer/sharer.php?u={{ base_path }}{{ page.url }}" class="btn btn--facebook" title="{{ site.data.ui-text[site.locale].share_on_label }} Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Share on Facebook</span></a>
         </form>
     </div>
