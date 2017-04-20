@@ -287,11 +287,8 @@ app.factory('polls', ['$http', 'auth', function ($http, auth) {
     };
 
     o.upvoteOption = function (poll, option) {
-        return $http.put('/polls/' + poll._id + '/options/' + option._id + '/upvote', null,
-            {
-                headers: { Authorization: 'Bearer ' + auth.getToken() }
-            }
-        ).success(function (data) {
+        return $http.put('/polls/' + poll._id + '/options/' + option._id + '/upvote')
+        .success(function (data) {
             option.upvotes += 1;
         })
             .error(function (error) {
