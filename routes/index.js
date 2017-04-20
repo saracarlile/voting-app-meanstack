@@ -104,7 +104,7 @@ router.post('/polls/:poll/options', auth, function (req, res, next) {  //add pol
 });
 
 
-router.put('/polls/:poll/options/:option/upvote', auth, function (req, res, next) {
+router.put('/polls/:poll/options/:option/upvote', function (req, res, next) {
   req.option.upvote(function (err, option) {
     if (err) { return next(err); }
 
