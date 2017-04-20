@@ -129,7 +129,9 @@
 <div class='row'  ng-show="isLoggedIn()" style="margin:75px 10px 200px; background-color: oldlace">
     <div class="col-xs-12">
         <h3>{{author}}'s Polls</h3>
-        <div ng-show="mypolls.length < 1">{{author}} has no polls defined -- add some polls!</div>
+        <div ng-show="mypolls.length < 1">
+        <h4>You has no polls defined -- add some polls!</h4>
+        </div>
 
         <ul ng-repeat="poll in mypolls">
             <li>{{poll.title}}</li><button ng-click="delete($index)">Delete Poll</button>
